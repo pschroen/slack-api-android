@@ -1,4 +1,4 @@
-# slack-api-android [![Release](https://img.shields.io/github/release/pschroen/slack-api-android.svg?label=JitPack)](https://jitpack.io/#pschroen/slack-api-android) [![Build Status](https://travis-ci.org/pschroen/slack-api-android.svg)](https://travis-ci.org/pschroen/slack-api-android)
+# slack-api-android [![Release](https://jitpack.io/v/pschroen/slack-api-android.svg)](https://jitpack.io/#pschroen/slack-api-android) [![Build Status](https://travis-ci.org/pschroen/slack-api-android.svg)](https://travis-ci.org/pschroen/slack-api-android)
 
 Port of [allbegray](https://github.com/allbegray)'s [slack-api](https://github.com/allbegray/slack-api).
 
