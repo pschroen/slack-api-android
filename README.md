@@ -27,3 +27,58 @@ dependencies {
 - Commons Logging replaced with Android Logging.
 - `org.apache.http` classes replaced with HttpClient for Android [maintained by Marek Sebera](https://hc.apache.org/httpcomponents-client-4.5.x/android-port.html).
 - `org.asynchttpclient` classes replaced with [OkHttp](http://square.github.io/okhttp/) Web Sockets and [Socket.IO](https://github.com/socketio)'s [WebSocket.java](https://github.com/socketio/engine.io-client-java/blob/master/src/main/java/io/socket/engineio/client/transports/WebSocket.java) as a reference.
+
+## Usage
+
+```java
+final String slackToken = mSharedPref.getString("slack_token", "");
+
+mWebApiClient = SlackClientFactory.createWebApiClient(slackToken);
+String webSocketUrl = mWebApiClient.startRealTimeMessagingApi().findPath("url").asText();
+mRtmClient = new SlackRealTimeMessagingClient(webSocketUrl, null, null);
+
+mRtmClient.addListener(Event.HELLO, new EventListener() {
+
+    @Override
+    public void handleMessage(JsonNode message) {
+        Authentication authentication = mWebApiClient.auth();
+        mBotId = authentication.getUser_id();
+
+        System.out.println("User id: " + mBotId);
+        System.out.println("Team name: " + authentication.getTeam());
+        System.out.println("User name: " + authentication.getUser());
+    }
+});
+
+mRtmClient.addListener(Event.MESSAGE, new EventListener() {
+
+    @Override
+    public void handleMessage(JsonNode message) {
+        String channelId = message.findPath("channel").asText();
+        String userId = message.findPath("user").asText();
+        String text = message.findPath("text").asText();
+
+        if (userId != null && !userId.equals(mBotId)) {
+            Channel channel;
+            try {
+                channel = mWebApiClient.getChannelInfo(channelId);
+            } catch (SlackResponseErrorException e) {
+                channel = null;
+            }
+            User user = mWebApiClient.getUserInfo(userId);
+            String userName = user.getName();
+
+            System.out.println("Channel id: " + channelId);
+            System.out.println("Channel name: " + (channel != null ? "#" + channel.getName() : "DM"));
+            System.out.println("User id: " + userId);
+            System.out.println("User name: " + userName);
+            System.out.println("Text: " + text);
+
+            // Copy cat
+            mWebApiClient.meMessage(channelId, userName + ": " + text);
+        }
+    }
+});
+
+mRtmClient.connect();
+```
