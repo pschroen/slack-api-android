@@ -82,3 +82,14 @@ mRtmClient.addListener(Event.MESSAGE, new EventListener() {
 
 mRtmClient.connect();
 ```
+
+## ProGuard
+
+```
+-dontwarn allbegray.slack.**
+-keep class allbegray.slack.** {*;}
+-dontwarn com.fasterxml.**
+-keep class com.fasterxml.** {*;}
+-dontwarn okio.**
+-keep class okio.** {*;}
+```
