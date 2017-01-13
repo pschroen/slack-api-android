@@ -83,6 +83,28 @@ mRtmClient.addListener(Event.MESSAGE, new EventListener() {
 mRtmClient.connect();
 ```
 
+If you need to catch the close and failure events you can add listeners.
+
+```java
+mRtmClient.addCloseListener(new CloseListener() {
+
+    @Override
+    public void onClose() {
+        System.out.println("Connection closed");
+    }
+});
+
+mRtmClient.addFailureListener(new FailureListener() {
+
+    @Override
+    public void onFailure(Throwable t) {
+        Exception e = (Exception) t;
+
+        System.out.println("Failure message: " + e.getMessage());
+    }
+});
+```
+
 ## ProGuard
 
 ```
