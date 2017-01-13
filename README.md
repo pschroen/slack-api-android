@@ -35,12 +35,12 @@ final String slackToken = mSharedPref.getString("slack_token", "");
 
 mWebApiClient = SlackClientFactory.createWebApiClient(slackToken);
 String webSocketUrl = mWebApiClient.startRealTimeMessagingApi().findPath("url").asText();
-mRtmClient = new SlackRealTimeMessagingClient(webSocketUrl, null, null);
+mRtmClient = new SlackRealTimeMessagingClient(webSocketUrl);
 
 mRtmClient.addListener(Event.HELLO, new EventListener() {
 
     @Override
-    public void handleMessage(JsonNode message) {
+    public void onMessage(JsonNode message) {
         Authentication authentication = mWebApiClient.auth();
         mBotId = authentication.getUser_id();
 
@@ -53,7 +53,7 @@ mRtmClient.addListener(Event.HELLO, new EventListener() {
 mRtmClient.addListener(Event.MESSAGE, new EventListener() {
 
     @Override
-    public void handleMessage(JsonNode message) {
+    public void onMessage(JsonNode message) {
         String channelId = message.findPath("channel").asText();
         String userId = message.findPath("user").asText();
         String text = message.findPath("text").asText();
