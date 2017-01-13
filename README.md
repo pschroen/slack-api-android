@@ -17,7 +17,7 @@ and:
 
 ```gradle
 dependencies {
-    compile 'com.github.pschroen:slack-api-android:v1.3.0-RELEASE'
+    compile 'com.github.pschroen:slack-api-android:android-19-v1.3.0-RELEASE-gb78e900-11'
 }
 ```
 
