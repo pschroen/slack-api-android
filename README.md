@@ -9,15 +9,16 @@ Add it to your build.gradle with:
 ```gradle
 allprojects {
     repositories {
-        maven { url "https://jitpack.io" }
+        maven { url 'https://jitpack.io' }
     }
 }
 ```
+
 and:
 
 ```gradle
 dependencies {
-    compile 'com.github.pschroen:slack-api-android:-android-19-v1.3.0-RELEASE-gb78e900-11'
+    compile 'com.github.pschroen:slack-api-android:b78e900d9e'
 }
 ```
 
@@ -83,7 +84,7 @@ mRtmClient.addListener(Event.MESSAGE, new EventListener() {
 mRtmClient.connect();
 ```
 
-If you need to catch the close and failure events you can add listeners.
+If you need to catch the close and failure events you can add listeners:
 
 ```java
 mRtmClient.addCloseListener(new CloseListener() {
